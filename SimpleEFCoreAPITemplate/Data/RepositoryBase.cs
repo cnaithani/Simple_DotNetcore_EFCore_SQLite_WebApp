@@ -49,11 +49,11 @@ namespace SimpleEFCoreAPITemplate.Data
                 foreach (T obj in objects)
                     dbset.Remove(obj);
             }
-            public virtual T? GetById(long id)
+            public virtual T? GetById(int id)
             {
                 return dbset.Find(id);
             }
-            public async Task<T?> GetByIdAsync(long Id)
+            public async Task<T?> GetByIdAsync(int Id)
             {
                 return await dbset.FindAsync(Id);
             }

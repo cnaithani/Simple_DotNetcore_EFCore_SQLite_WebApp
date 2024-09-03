@@ -7,6 +7,9 @@
         public string Description { get; set; } = string.Empty;
         public decimal BasePrice { get; set; } 
         public string ImageUrl { get; set; } = string.Empty;
+        public decimal Length { get; set; }
+        public decimal Width { get; set; }
+        public decimal Height { get; set; }
         public string Dimentions { get; set; } = string.Empty;
     }
 }

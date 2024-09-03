@@ -21,8 +21,6 @@
   <ItemGroup>
     <Folder Include="Blob\" />
     <Folder Include="Enums\" />
-    <Folder Include="Features\Classes\" />
-    <Folder Include="Features\Interfaces\" />
     <Folder Include="RepoBase\" />
   </ItemGroup>
 

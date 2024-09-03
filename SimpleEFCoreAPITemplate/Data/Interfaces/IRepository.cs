@@ -11,8 +11,8 @@ namespace SimpleEFCoreAPITemplate.Data.Interfaces
         Task DeleteAsync(Expression<Func<T, bool>> where);
         T? Get(Expression<Func<T, bool>> where);
         Task<T?> GetAsync(Expression<Func<T, bool>> where);
-        T? GetById(long Id);
-        Task<T?> GetByIdAsync(long Id);
+        T? GetById(int Id);
+        Task<T?> GetByIdAsync(int Id);
         IEnumerable<T> GetAll();
         Task<T> GetAllAsync();
         IQueryable<T> GetAllQuery();

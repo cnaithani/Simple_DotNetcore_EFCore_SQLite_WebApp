@@ -32,40 +32,67 @@ namespace SimpleEFCoreAPITemplate.Controllers
                            from f in j.DefaultIfEmpty()
                            select new ProductDTO
                            {
-                               Id = f.ProductId,
+                               Id = p.Id,
                                Name = p.Name,
                                Description = p.Description,
                                BasePrice = p.BasePrice,
                                ImageUrl = p.ImageUrl,
+                               Length = f.Length,
+                               Width = f.Width,
+                               Height = f.Height,
                                Dimentions = string.Concat(f.Length.ToString(), "*", f.Width.ToString(), "*", f.Height.ToString())
                            };
 
             return (products).ToList(); ;
         }
 
-        //// GET api/<ProductsController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        // POST api/<ProductsController>
+        [HttpPost]
+        public async Task<bool> Post([FromBody] ProductDTO productParam)
+        {
+            var product = await _unitOfWork.ProductRepository.GetByIdAsync(productParam.Id);
+            if (product == null)
+            {
+                product = new Product
+                {
+                    Name = productParam.Name,
+                    Description = productParam.Description,
+                    BasePrice = productParam.BasePrice,
+                };
+            }
+            else
+            {
+                product.Name = productParam.Name;
+                product.Description = productParam.Description;
+                product.BasePrice = productParam.BasePrice;
+                
+            }
 
-        //// POST api/<ProductsController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
 
-        //// PUT api/<ProductsController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+            var productDet = await _unitOfWork.ProductDetailRepository.GetAsync(x=>x.ProductId == productParam.Id);
+            if (productDet == null)
+            {
+                productDet = new ProductDetail
+                {
+                    Length = productParam.Length,
+                    Width = productParam.Width,
+                    Height = productParam.Height,
+                };
+            }
+            else
+            {
+                productDet.Length = productParam.Length;
+                productDet.Width = productParam.Width;
+                productDet.Height = productParam.Height;
 
-        //// DELETE api/<ProductsController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+            }
+
+
+            await _unitOfWork.CommitAsync();
+
+            return true;
+        }
+
+
     }
 }
