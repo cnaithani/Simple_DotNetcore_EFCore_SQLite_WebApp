@@ -14,7 +14,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 
 //Configure DI for repositories
-builder.Services.AddScoped<IDatabaseFactory, DatabaseFactory>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 // configure DI for Unit Of Work
