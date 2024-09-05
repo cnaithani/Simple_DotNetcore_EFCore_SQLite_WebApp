@@ -8,20 +8,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Enums\**" />
+    <Compile Remove="RepoBase\**" />
+    <Content Remove="Enums\**" />
+    <Content Remove="RepoBase\**" />
+    <EmbeddedResource Remove="Enums\**" />
+    <EmbeddedResource Remove="RepoBase\**" />
+    <None Remove="Enums\**" />
+    <None Remove="RepoBase\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Controllers\WeatherForecastController.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.3" />
     <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Blob\" />
-    <Folder Include="Enums\" />
-    <Folder Include="RepoBase\" />
   </ItemGroup>
 
 </Project>

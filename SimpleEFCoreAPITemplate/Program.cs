@@ -1,11 +1,28 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using SimpleEFCoreAPITemplate.Data;
 using SimpleEFCoreAPITemplate.Data.Interfaces;
 using static SimpleEFCoreAPITemplate.Data.RepositoryBase;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables().Build();
+
+// Clear default logging and add desired logs(Serilogs)
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Verbose()
+                .Enrich.WithProperty("ApplicationContext", "SimpleEFCoreAPITemplate")
+                .Enrich.FromLogContext()
+                   .WriteTo.Console()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -51,4 +68,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+Log.Information("Starting SimpleEFCoreAPITemplate API");
 app.Run();

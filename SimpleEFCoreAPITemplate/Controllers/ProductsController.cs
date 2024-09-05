@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Core;
 using SimpleEFCoreAPITemplate.Data;
 using SimpleEFCoreAPITemplate.Data.Interfaces;
 using SimpleEFCoreAPITemplate.DTOs;
@@ -24,6 +26,7 @@ namespace SimpleEFCoreAPITemplate.Controllers
         [HttpGet]
         public async Task<IEnumerable<ProductDTO>> Get()
         {
+            Log.Information("Fetching Products");
             var product = _unitOfWork.ProductRepository.GetAll();
             var productDetail = _unitOfWork.ProductDetailRepository.GetAll();
             var products = from p in product
@@ -43,6 +46,7 @@ namespace SimpleEFCoreAPITemplate.Controllers
                                Dimentions = string.Concat(f.Length.ToString(), "*", f.Width.ToString(), "*", f.Height.ToString())
                            };
 
+            Log.Information("Completed Fetching Products");
             return (products).ToList(); ;
         }
 
@@ -50,6 +54,7 @@ namespace SimpleEFCoreAPITemplate.Controllers
         [HttpPost]
         public async Task<bool> Post([FromBody] ProductDTO productParam)
         {
+            Log.Information("Posting Products");
             var product = await _unitOfWork.ProductRepository.GetByIdAsync(productParam.Id);
             if (product == null)
             {
@@ -90,6 +95,7 @@ namespace SimpleEFCoreAPITemplate.Controllers
 
             await _unitOfWork.CommitAsync();
 
+            Log.Information("Compleated Posting Products");
             return true;
         }
 
